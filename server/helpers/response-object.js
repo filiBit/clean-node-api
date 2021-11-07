@@ -1,3 +1,3 @@
-module.exports = function makeCustomResponseObject(nodeResponse) {
-  return nodeResponse;
-};
+module.exports = function makeCustomResponseObject (nodeResponse) {
+    return nodeResponse
+}

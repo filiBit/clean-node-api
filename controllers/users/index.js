@@ -1,22 +1,22 @@
-const buildIndividualUserController = require("./individual-user-controller");
+const buildIndividualUserController = require('./individual-user-controller')
 
-const buildGetUsersMethod = require("./get-users-method");
-const buildPostUserMethod = require("./post-users-method");
+const buildGetUsersMethod = require('./get-users-method')
+const buildPostUserMethod = require('./post-users-method')
 
 module.exports = function buildUsersController() {
-  const getUsersMethod = buildGetUsersMethod();
-  const postUserMethod = buildPostUserMethod();
+    const getUsersMethod = buildGetUsersMethod()
+    const postUserMethod = buildPostUserMethod()
 
-  const individualUserController = buildIndividualUserController();
+    const individualUserController = buildIndividualUserController()
 
-  return {
-    methods: {
-      getMethod: getUsersMethod,
-      postMethod: postUserMethod
-    },
-    subParameter: "name",
-    controllers: {
-      name: individualUserController
+    return {
+        methods: {
+            getMethod: getUsersMethod,
+            postMethod: postUserMethod
+        },
+        subParameter: 'name',
+        controllers: {
+            name: individualUserController
+        }
     }
-  };
-};
+}

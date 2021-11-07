@@ -6,7 +6,7 @@ Inspired by **Clean code** paradigm and **SOLID principles**.
 
 - The API is RESTful and written in Javascript (Node.js environment)
 
-- The only dependencies are Node's built-in modules
+- The only production dependencies are Node's built-in modules
 
 - **It's work in progress**
 
