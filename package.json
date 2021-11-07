@@ -1,0 +1,25 @@
+{
+  "name": "clean-node-api",
+  "version": "1.0.0",
+  "description": "A web API that demonstrates some of the arguably best coding practices.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint --fix --ext .js .",
+    "test": "eslint --ext .js ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filiBit/clean-node-api.git"
+  },
+  "private": true,
+  "author": "Filip Biterski",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/filiBit/clean-node-api/issues"
+  },
+  "homepage": "https://github.com/filiBit/clean-node-api#readme",
+  "devDependencies": {
+    "eslint": "^8.2.0"
+  }
+}
