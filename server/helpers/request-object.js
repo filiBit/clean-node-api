@@ -8,6 +8,7 @@ module.exports = function makeCustomRequestObject(nodeRequest) {
     ...nodeRequest,
     parsedUrl: parsedUrl,
     pathSegments: pathname.split("/").filter(s => s != ""),
-    methodName: nodeRequest.method.toLowerCase()
+    methodName: nodeRequest.method.toLowerCase(),
+    pathParameters: {}
   };
 };
