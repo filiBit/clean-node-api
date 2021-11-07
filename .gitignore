@@ -1,0 +1,6 @@
+.git
+.data
+
+# Logs
+logs
+*.log
