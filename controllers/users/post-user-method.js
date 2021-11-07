@@ -1,8 +1,8 @@
 module.exports = function buildPostUserMethod(makePayload, addUser) {
   return async function postUserMethod(req, res) {
-    const payload = await makePayload(req);
+    const userInfo = await makeRequestPayload(req);
 
-    const addUserResult = await userUseCases.getAllUsers(payload);
+    const addUserResult = await userUseCases.getAllUsers(userInfo);
     if (addUserResult.isError) {
       res.statusCode = 400;
       res.setHeader("Content-Type", "application/json");

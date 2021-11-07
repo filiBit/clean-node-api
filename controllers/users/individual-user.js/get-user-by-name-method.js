@@ -1,6 +1,8 @@
-module.exports = function buildGetUserByIdMethod(queryUserById) {
-  return async function getUserByIdMethod(id) {
-    const userResult = await queryUserById(id);
+module.exports = function buildGetUserByNameMethod(queryUserByName) {
+  return async function getUserByNameMethod(req, res) {
+    const {name} = req.pathParams;
+
+    const userResult = await queryUserById(name);
     if (userResult.isError) {
       res.statusCode = 400;
       res.setHeader("Content-Type", "application/json");

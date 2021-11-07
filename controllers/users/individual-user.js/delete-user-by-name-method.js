@@ -1,6 +1,8 @@
-module.exports = function buildDeleteUserByIdMethod(deleteUserById) {
-  return async function deleteUserByIdMethod(id) {
-    const userDeleteResult = await deleteUserById(id);
+module.exports = function buildDeleteUserByNameMethod(deleteUserByName) {
+  return async function deleteUserByNameMethod(req, res) {
+    const {name} = req.pathParams;
+
+    const userDeleteResult = await deleteUserByName(name);
     if (userDeleteResult.isError) {
       res.statusCode = 400;
       res.setHeader("Content-Type", "application/json");
