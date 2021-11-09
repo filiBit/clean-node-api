@@ -5,7 +5,7 @@ module.exports = function buildInsertUser({fs, path, dirPath, makeDataResult}) {
 
         const promiseOperation = fs
             .writeFile(filePath, user, {flag: 'wx'})
-            .then(_ => [null, user])
+            .then(() => [null, user])
             .catch(error => [error, null])
 
         return await makeDataResult(promiseOperation)

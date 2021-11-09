@@ -8,8 +8,8 @@ module.exports = function buildModifyUser({
         const fileName = user.id + '.json'
         const filePath = path.join(userDirPath, fileName)
         const promiseOperation = fs
-            .writeFile(filePath, user)
-            .then(_ => [null, user])
+            .writeFile(filePath, user, {flag: 'r+'})
+            .then(() => [null, user])
             .catch(error => [error, null])
         return await makeDataResult(promiseOperation)
     }

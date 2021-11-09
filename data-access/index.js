@@ -13,12 +13,9 @@ const buildSessionDataAccess = require('./session')
 module.exports = function buildDataAccess() {
     console.log('Building data access...')
 
-    const makeDirIfMissing = buildMakeDirIfMissing(path)
-    const dataDirPath = makeDirIfMissing(__baseDirPath, '.data')
-    const makeDataResult = buildMakeDataResult(
-        makeDataErrorResult,
-        makeDataSuccessResult
-    )
+    const makeDirIfMissing = buildMakeDirIfMissing(path, fs)
+    const dataDirPath = makeDirIfMissing(global.__baseDirPath, '.data')
+    const makeDataResult = buildMakeDataResult(makeDataErrorResult, makeDataSuccessResult)
 
     const userDataAccess = buildUserDataAccess({
         path,
@@ -38,9 +35,5 @@ module.exports = function buildDataAccess() {
 
     const sessionDataAccess = buildSessionDataAccess()
 
-    return {
-        userDataAccess,
-        postDataAccess,
-        sessionDataAccess
-    }
+    return {userDataAccess, postDataAccess, sessionDataAccess}
 }

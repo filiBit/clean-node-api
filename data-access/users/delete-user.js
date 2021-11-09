@@ -4,8 +4,8 @@ module.exports = function buildDeleteUser({fs, path, dirPath, makeDataResult}) {
         const filePath = path.join(dirPath, fileName)
         const promiseOperation = fs
             .rm(filePath)
-            .then(_ => [null, id])
-            .catch(error => [err, null])
+            .then(() => [null, id])
+            .catch(error => [error, null])
 
         return await makeDataResult(promiseOperation)
     }

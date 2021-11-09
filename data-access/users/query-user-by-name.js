@@ -1,17 +1,13 @@
-module.exports = function buildQueryUserByName(queryAllUserIds, queryUserById) {
+module.exports = function buildQueryUserByName({path, fs, dirPath, makeDataResult}) {
     return async function queryUserByName(name) {
-        const idListResult = await queryAllUserIds()
-        if (idListResult.isError) return idListResult
+        const fileName = name + '.json'
+        const filePath = path.join(dirPath, fileName)
 
-        let selectedUser = {value: null}
-        for (let i = 0; i < idList.value.length; i++) {
-            const userResult = await queryUserById(idList[i])
-            if (userResult.value.name == name) {
-                selectedUser = userResult
-                break
-            }
-        }
+        const promiseOperation = fs
+            .readFile(filePath)
+            .then(user => [null, user])
+            .catch(error => [error.code == 'ENOENT' ? null : error, null])
 
-        return selectedUser
+        return await makeDataResult(promiseOperation)
     }
 }

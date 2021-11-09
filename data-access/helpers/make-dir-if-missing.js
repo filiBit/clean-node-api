@@ -1,4 +1,4 @@
-module.exports = function buildMakeDirIfMissing(path) {
+module.exports = function buildMakeDirIfMissing(path, fs) {
     return function makeDirIfMissing(parentDirPath, dirName) {
         const dirPath = path.join(parentDirPath, dirName)
 

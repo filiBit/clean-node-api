@@ -5,8 +5,8 @@ module.exports = function buildQueryPostById({fs, path, dirPath, makeDataResult}
 
         const promiseOperation = fs
             .readFile(filePath)
-            .then(user => [null, post])
-            .catch(error => [error, null])
+            .then(post => [null, post])
+            .catch(error => [error.code == 'ENOENT' ? null : error, null])
 
         return await makeDataResult(promiseOperation)
     }

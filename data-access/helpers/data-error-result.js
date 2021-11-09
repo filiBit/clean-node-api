@@ -1,9 +1,9 @@
 module.exports = function makeDataErrorResult(error) {
-    switch (error) {
+    switch (error.code) {
     case 'ENOENT':
         return {
-            isError: false,
-            value: null
+            isError: true,
+            reason: 'File doesn\'t exist.'
         }
     case 'EEXIST':
         return {

@@ -15,17 +15,16 @@ module.exports = function buildUserDataAccess({
     const dirPath = makeDirIfMissing(parentDirPath, 'users')
 
     const insertUser = buildInsertUser({fs, path, dirPath, makeDataResult})
-    const queryAllUserNames = buildQueryAllUserNames(dirPath, makeDataResult)
-    const queryAllUsers = buildQueryAllUsers(queryAllUserNames, findUserById)
-    const queryUserByName = buildQueryUserByName(queryAllUserNames, findUserById)
+    const queryUserByName = buildQueryUserByName({path, fs, dirPath, makeDataResult})
+    const queryAllUserNames = buildQueryAllUserNames(path, fs, dirPath, makeDataResult)
+    const queryAllUsers = buildQueryAllUsers(queryAllUserNames, queryUserByName)
     const modifyUser = buildModifyUser({fs, path, dirPath, makeDataResult})
     const deleteUser = buildDeleteUser({fs, path, dirPath, makeDataResult})
 
     return {
         insertUser,
         queryAllUsers,
-        queryAllUserIds,
-        queryUserById,
+        queryAllUserNames,
         queryUserByName,
         modifyUser,
         deleteUser

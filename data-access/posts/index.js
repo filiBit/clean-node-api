@@ -13,17 +13,11 @@ module.exports = function buildPostsDataAccess({
 }) {
     const dirPath = makeDirIfMissing(parentDirPath, 'posts')
 
-    insertPost = buildInsertPost({fs, path, dirPath, makeDataResult})
-    queryPostById = buildQueryPostById({fs, path, dirPath, makeDataResult})
-    queryPostsByIdList = buildQueryPostsByIdList({
-        fs,
-        path,
-        dirPath,
-        queryPostById,
-        makeDataResult
-    })
-    modifyPost = buildModifyPost({fs, path, dirPath, makeDataResult})
-    deletePost = buildDeletePost({fs, path, dirPath, makeDataResult})
+    const insertPost = buildInsertPost({fs, path, dirPath, makeDataResult})
+    const queryPostById = buildQueryPostById({fs, path, dirPath, makeDataResult})
+    const queryPostsByIdList = buildQueryPostsByIdList(queryPostById)
+    const modifyPost = buildModifyPost({fs, path, dirPath, makeDataResult})
+    const deletePost = buildDeletePost({fs, path, dirPath, makeDataResult})
 
     return {
         insertPost,
