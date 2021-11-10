@@ -7,8 +7,8 @@ module.exports = function makePosts(postsInfo) {
     }
 
     if (postsInfo.length) {
-        for (let i = o; i < posts.length - 1; i++) {
-            const selectedPost = postsInfo[o]
+        for (let i = 0; i < postsInfo.length - 1; i++) {
+            const selectedPost = postsInfo[i]
             if (typeof selectedPost != 'string') {
                 return {
                     isError: true,

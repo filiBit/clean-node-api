@@ -1,20 +1,20 @@
 const makeName = require('./helpers/name')
+const makePassword = require('./helpers/password')
 const buildMakePasswordHash = require('./helpers/password-hash')
-const buildMakeCreatedOn = require('./helpers/created-on')
-const buildMakeLastModofiedOn = require('./helpers/last-modified-on')
+const makeCreatedOn = require('./helpers/created-on')
+const makeLastModifiedOn = require('./helpers/last-modified-on')
 const makePosts = require('./helpers/posts')
 const buildMakeUser = require('./user.js')
 
-module.exports = function buildUserEntityTools(crypto, DateApi) {
+module.exports = function buildUserEntityTools(crypto) {
     const makePasswordHash = buildMakePasswordHash(crypto)
-    const makeCreatedOn = buildMakeCreatedOn(DateApi)
-    const makeLastModifiexOn = buildMakeLastModifiedOn(DateApi)
 
     const makeUser = buildMakeUser({
         makeName,
+        makePassword,
         makePasswordHash,
         makeCreatedOn,
-        makeLastModofiedOn,
+        makeLastModifiedOn,
         makePosts
     })
 
@@ -24,7 +24,7 @@ module.exports = function buildUserEntityTools(crypto, DateApi) {
             makeName,
             makePasswordHash,
             makeCreatedOn,
-            makeLastModofiedOn,
+            makeLastModifiedOn,
             makePosts
         }
     }

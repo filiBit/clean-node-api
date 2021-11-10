@@ -1,12 +1,17 @@
 const crypto = require('crypto')
 
-const buildMakeUser = require('./user')
-const buildMakePost = require('./post')
+const buildUserEntityTools = require('./user')
+const buildPostEntityTools = require('./post')
+const buildSessionEntityTools = require('./session')
 
 module.exports = function buildEntities() {
     console.log('Building entities...')
-    userEntityTools = buildUserEntityTools(crypto, Date)
-    makePost = buildMakePost(Date)
 
-    return {userEntityTools, makePost}
+    const SECONDS_IN_24_HOURS = 24 * 60 * 60
+
+    const userEntityTools = buildUserEntityTools(crypto)
+    const postEntityTools = buildPostEntityTools()
+    const sessionEntityTools = buildSessionEntityTools(crypto, SECONDS_IN_24_HOURS)
+
+    return {userEntityTools, postEntityTools, sessionEntityTools}
 }

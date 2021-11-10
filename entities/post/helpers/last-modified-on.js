@@ -1,7 +1,5 @@
-module.exports = function buildMakeLastModifiedOn(DateApi) {
-    return function makeLastModifiedOn(existingCreatedOn) {
-        return existingCreatedOn
-            ? {value: DateApi.now().toISOString()}
-            : {value: null}
-    }
+module.exports = function makeLastModifiedOn(existingCreatedOn) {
+    return existingCreatedOn
+        ? {value: Date.now().toISOString()}
+        : {value: null}
 }

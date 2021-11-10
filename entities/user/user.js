@@ -1,34 +1,35 @@
-const buildMakeHashedPassword = require('./helpers/password')
-const makeName = require('./helpers/name')
-const buildMakeCreatedOn = require('./helpers/created-on')
-const buildMakeLastModofiedOn = require('./helpers/last-modified-on')
-
-module.exports = function buildMakeUser(makePasswordHash, DateApi) {
-    const makeHashedPassword = buildMakeHashedPassword(hashTool)
-    const makeCreatedOn = buildMakeCreatedOn(DateApi)
-    const makeLastModofiedOn = buildMakeLastModofiedOn(DateApi)
-
+module.exports = function buildMakeUser({
+    makeName,
+    makePassword,
+    makePasswordHash,
+    makeCreatedOn,
+    makeLastModifiedOn,
+    makePosts
+}) {
     return function makeUser(userInfo) {
         const nameResult = makeName(userInfo.name)
         if (nameResult.isError) return nameResult
 
-        const postsResult = makePostsResult(userInfo.posts)
+        const postsResult = makePosts(userInfo.posts)
         if (postsResult.isError) return postsResult
-
-        const hashedPasswordResult = makePasswordHash(userInfo.password, userInfo.hashedPassword)
-        if (hashedPasswordResult.isError) return hashedPasswordResult
 
         const createdOnResult = makeCreatedOn(userInfo.createdOn)
         if (createdOnResult.isError) return createdOnResult
 
-        const lastModifiedOnResult = makeLastModofiedOn(userInfo.createdOn)
+        const lastModifiedOnResult = makeLastModifiedOn(userInfo.createdOn)
         if (lastModifiedOnResult.isError) return lastModifiedOnResult
+
+        const passwordResult = makePassword(userInfo.password)
+        if (passwordResult.isError) return passwordResult
+
+        const passwordHashResult = makePasswordHash(passwordResult.value)
+        if (passwordHashResult.isError) return passwordHashResult
 
         return {
             value: {
                 name: nameResult.value,
-                posts: posts.value,
-                hashedPassword: hashedPasswordResult.value,
+                posts: postsResult.value,
+                passwordHash: passwordHashResult.value,
                 createdOn: createdOnResult.value,
                 lastModifiedOn: lastModifiedOnResult.Value
             }
