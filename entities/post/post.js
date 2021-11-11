@@ -2,7 +2,7 @@ module.exports = function buildMakePost({
     makeTextContent,
     makeCreatedOn,
     makeLastModifiedOn,
-    makeAuthorId
+    makeAuthorName
 }) {
     return function makePost(postInfo) {
         const textContentResult = makeTextContent(postInfo.textContent)
@@ -14,8 +14,8 @@ module.exports = function buildMakePost({
         const lastModifiedOnResult = makeLastModifiedOn(postInfo.lastModifiedOn)
         if (lastModifiedOnResult.isError) return lastModifiedOnResult
 
-        const authorIdResult = makeAuthorId(postInfo.author)
-        if (authorIdResult.isError) return authorIdResult
+        const authorNameResult = makeAuthorName(postInfo.author)
+        if (authorNameResult.isError) return authorNameResult
 
         return {
             isError: false,
@@ -23,7 +23,7 @@ module.exports = function buildMakePost({
                 textContent: textContentResult.value,
                 lastModifiedOn: lastModifiedOnResult.value,
                 createdOn: createdOnResult.value,
-                author: authorIdResult.value
+                authorName: authorNameResult.value
             }
         }
     }

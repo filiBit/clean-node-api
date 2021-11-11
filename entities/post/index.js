@@ -1,7 +1,7 @@
 const makeTextContent = require('./helpers/text-content')
 const makeCreatedOn = require('./helpers/created-on')
 const makeLastModifiedOn = require('./helpers/last-modified-on')
-const makeAuthorId = require('./helpers/author-id')
+const makeAuthorName = require('./helpers/author-name')
 const buildMakePost = require('./post.js')
 
 module.exports = function buildLastModifiedOn() {
@@ -9,7 +9,7 @@ module.exports = function buildLastModifiedOn() {
         makeTextContent,
         makeCreatedOn,
         makeLastModifiedOn,
-        makeAuthorId
+        makeAuthorName
     })
 
     return {
@@ -18,7 +18,7 @@ module.exports = function buildLastModifiedOn() {
             makeTextContent,
             makeCreatedOn,
             makeLastModifiedOn,
-            makeAuthorId
+            makeAuthorName
         }
     }
 }

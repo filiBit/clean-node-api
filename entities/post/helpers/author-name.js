@@ -1,5 +1,5 @@
-module.exports = function makeAuthor(authorIdInfo) {
-    if (typeof authorIdInfo != 'string') {
+module.exports = function makeAuthorName(authorNameInfo) {
+    if (typeof authorNameInfo != 'string') {
         return {
             isError: true,
             reason: 'Invalid author type.'
@@ -8,6 +8,6 @@ module.exports = function makeAuthor(authorIdInfo) {
 
     return {
         isError: false,
-        value: authorIdInfo
+        value: authorNameInfo
     }
 }
