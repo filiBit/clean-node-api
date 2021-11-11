@@ -1,18 +1,15 @@
 const buildUserUseCases = require('./user')
 const builldPostUseCases = require('./post')
+const buildSessionUseCases = require('./session')
 
 module.exports = function buildUseCases(entities, dataAccess) {
     console.log('Building use-cases...')
-    const {userEntityTools, makePost} = entities
-    const {userDataAccess, postDataAccess} = dataAccess
+    const {userEntityTools, postEntityTools, sessionEntityTools} = entities
+    const {userDataAccess, postDataAccess, sessionDataAccess} = dataAccess
 
     const userUseCases = buildUserUseCases(userEntityTools, userDataAccess)
+    const postUseCases = builldPostUseCases({postEntityTools, postDataAccess, userUseCases})
+    const sessionUseCases = buildSessionUseCases({sessionEntityTools, userEntityTools, sessionDataAccess})
 
-    const postUseCases = builldPostUseCases(
-        makePost,
-        postDataAccess,
-        userUseCases
-    )
-
-    return {userUseCases, postUseCases}
+    return {userUseCases, postUseCases, sessionUseCases}
 }

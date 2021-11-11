@@ -1,7 +1,9 @@
-module.exports = function buildAddUser(makeUser, queryUserByName, insertUser) {
+module.exports = function buildAddUser({makeUser, queryUserByName, insertUser}) {
     return async function addUser(userInfo) {
         const userResult = makeUser(userInfo)
         if (userResult.isError) return userResult
+
+        const user =userResult.value
 
         const findUserResult = await queryUserByName(user.name)
         if (findUserResult.value) {
@@ -11,6 +13,6 @@ module.exports = function buildAddUser(makeUser, queryUserByName, insertUser) {
             }
         }
 
-        return await userDataAccess.insertUser(user)
+        return await insertUser(user)
     }
 }

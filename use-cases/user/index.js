@@ -1,37 +1,31 @@
-const buildAddUser = require('add-user')
-const buildRemoveUser = require('remove-user')
-const buildFindUserById = require('find-user-by-id')
-const buildFindUserByName = require('find-user-by-name')
-const buildEditUser = require('edit-user')
-const buildFindAllUsers = require('find-all-users')
-const buildFindAllUserPosts = require('find-all-user-posts')
+const buildAddUser = require('./add-user')
+const buildFindAllUsers = require('./find-all-users')
+const buildFindUserByName = require('./find-user-by-name')
+const buildEditUser = require('./edit-user')
+const buildRemoveUser = require('./remove-user')
 
 module.exports = function buildUserUseCases(userEntityTools, userDataAccess) {
-    const {makeUser, makePasswordHash} = userEntityTools
+    const {makeUser} = userEntityTools
 
     const {
         insertUser,
         queryAllUsers,
-        queryUserById,
         queryUserByName,
         modifyUser,
         deleteUser
     } = userDataAccess
 
-    const addUser = buildAddUser(makeUser, queryUserByName, insertUser)
-    const editUser = buildEditUser(makeUser, modifyUser)
+    const addUser = buildAddUser({makeUser, queryUserByName, insertUser})
     const findAllUsers = buildFindAllUsers(queryAllUsers)
-    const findUserById = buildFindUserById(queryUserById)
     const findUserByName = buildFindUserByName(queryUserByName)
-    const removeUser = buildRemoveUser(makeUser, deleteUser)
+    const editUser = buildEditUser({queryUserByName, makeUser, modifyUser})
+    const removeUser = buildRemoveUser(deleteUser)
 
     return {
         addUser,
         editUser,
         findAllUsers,
-        findUserById,
         findUserByName,
-        findAllUserPosts,
         removeUser
     }
 }

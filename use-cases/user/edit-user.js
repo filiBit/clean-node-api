@@ -1,10 +1,22 @@
-module.exports = function buildEditUser(makeUser, modifyUser) {
-    return async function editUser(existingUser, newUserInfo) {
-        const mergedUserInfo = {...existingUserInfo, ...newUserInfo}
+module.exports = function buildEditUser({queryUserByName, makeUser, modifyUser}) {
+    return async function editUser(editedUserInfo) {
+        const existingUserResult = queryUserByName(editedUserInfo.name)
+        if (existingUserResult.result.isError) return existingUserResult
 
-        const mergedUserResult = makeUser(mergedUserInfo)
-        if (mergedUserResult.isError) return mergedUserResult
+        const existingUser = existingUserResult.value
 
-        return await modifyUser(mergedUserResult)
+        if (existingUser == null) {
+            return {
+                isError: true,
+                reason: 'No user with such name'
+            }
+        }
+
+        const mergedUserInfo = {...existingUser, ...editedUserInfo}
+
+        const editedUserResult = makeUser(mergedUserInfo)
+        if (editedUserResult.isError) return editedUserResult
+
+        return await modifyUser(editedUserResult)
     }
 }

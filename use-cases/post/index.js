@@ -1,38 +1,25 @@
-const buildAddPost = require('add-post')
-const buildEditPost = require('edit-post')
-const buildFindAllPostsByUser = require('find-all-posts-by-user')
-const buildFindPostById = require('find-post-by-id')
-const buildRemovePost = require('remove-post')
+const buildAddPost = require('./add-post')
+const buildFindAllPostsByUser = require('./find-all-posts-by-user')
+const buildFindPostById = require('./find-post-by-id')
+const buildEditPost = require('./edit-post')
+const buildRemovePost = require('./remove-post')
 
-module.exports = function buildPostUseCases(
-    makePost,
-    postDataAccess,
-    userDataAccess
-) {
-    const {
-        insertPost,
-        queryPostById,
-        queryPostsByIdList,
-        modifyPost,
-        deletePostById
-    } = postDataAccess
+module.exports = function buildPostUseCases({postEntityTools, postDataAccess, userDataAccess}) {
+    const {makePost} = postEntityTools
+    const {insertPost, queryPostById, queryPostsByIdList, modifyPost, deletePostById} = postDataAccess
+    const {queryUserByName, modifyUser} = userDataAccess
 
-    const {queryUserById, modifyUser} = userDataAccess
-
-    const addPost = buildAddPost(
+    const addPost = buildAddPost({
         makePost,
-        queryUserById,
+        queryUserByName,
         insertPost,
         modifyUser,
-        deletePost
-    )
-    const editPost = buildEditPost(queryPostById, modifyPost)
-    const findAllPostsByUser = buildFindAllPostsByUser(
-        queryPostById,
-        makePost,
-        modifyPost
-    )
-    const findPostById = buildFindPostById(queryPostsByIdList)
+        deletePostById
+    })
+
+    const findAllPostsByUser = buildFindAllPostsByUser(queryPostsByIdList)
+    const findPostById = buildFindPostById(queryPostById)
+    const editPost = buildEditPost({queryPostById, makePost, modifyPost})
     const removePost = buildRemovePost(deletePostById)
 
     return {

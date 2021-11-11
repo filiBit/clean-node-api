@@ -1,16 +1,20 @@
-module.exports = function buildEditPost(queryPostById, makePost, modifyPost) {
-    return async function editPost(modifiedPostInfo) {
-        const existingPostResult = await queryPostById(modifiedPostInfo.id)
+module.exports = function buildEditPost({queryPostById, makePost, modifyPost}) {
+    return async function editPost(editedPostInfo) {
+        const existingPostResult = await queryPostById(editedPostInfo.id)
         if (existingPostResult.isError) return existingPostResult
         const existingPost = existingPostResult.value
 
-        const mergedPost = {
-            ...existingPost,
-            textContent: modifiedPostInfo.textContent
+        if (existingPost == null) {
+            return {
+                isError: true,
+                reason: 'No Post with such Id.'
+            }
         }
 
-        const modifiedPost = makePost(mergedPost)
+        const mergedPostInfo = {...existingPost, textContent: editedPostInfo.textContent}
 
-        return await modifyPost(modifiedPost)
+        const editedPost = makePost(mergedPostInfo)
+
+        return await modifyPost(editedPost)
     }
 }
