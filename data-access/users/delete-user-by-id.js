@@ -1,5 +1,5 @@
-module.exports = function buildDeletePost({fs, path, dirPath, makeDataResult}) {
-    return async function deletePost(id) {
+module.exports = function buildDeleteUserById({fs, path, dirPath, makeDataResult}) {
+    return async function deleteUserById(id) {
         const fileName = id + '.json'
         const filePath = path.join(dirPath, fileName)
         const promiseOperation = fs
