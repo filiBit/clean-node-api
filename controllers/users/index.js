@@ -1,22 +1,27 @@
-const buildIndividualUserController = require('./individual-user-controller')
-
-const buildGetUsersMethod = require('./get-users-method')
 const buildPostUserMethod = require('./post-users-method')
+const buildGetUsersMethod = require('./get-users-method')
+const buildPutUserMethod = require('./put-user-method')
+const buildUsersNameController = require('./name')
 
-module.exports = function buildUsersController() {
-    const getUsersMethod = buildGetUsersMethod()
-    const postUserMethod = buildPostUserMethod()
+module.exports = function buildUsersController({userUseCases, postUseCases, makeRequestPayload}) {
+    const {addUser, findAllUsers, findUserByName, editUser, removeUserByName} = userUseCases
+    const {findAllPostsByUser} = postUseCases
 
-    const individualUserController = buildIndividualUserController()
+    const postUserMethod = buildPostUserMethod(makeRequestPayload, addUser)
+    const getUsersMethod = buildGetUsersMethod(findAllUsers)
+    const putUserMethod = buildPutUserMethod(makeRequestPayload, editUser)
+
+    const usersNameController = buildUsersNameController({findUserByName, removeUserByName, findAllPostsByUser})
 
     return {
         methods: {
+            postMethod: postUserMethod,
             getMethod: getUsersMethod,
-            postMethod: postUserMethod
+            putMethod: putUserMethod
         },
         subParameter: 'name',
         controllers: {
-            name: individualUserController
+            name: usersNameController
         }
     }
 }

@@ -1,8 +1,21 @@
 module.exports = async function makeRequestPayload(req) {
     const buffers = []
     for await (const chunk of req) {
-        payload.push(chunk)
+        buffers.push(chunk)
     }
 
-    return JSON.parse(Buffer.concat(buffers).toString())
+    const stringPayload = Buffer.concat(buffers).toString()
+
+    let jsonPayload
+    try {
+        jsonPayload = JSON.parse(stringPayload)
+    }
+    catch (ex) {
+        return {
+            isError: true,
+            reason: 'Request payload has an invalid JSON format.'
+        }
+    }
+
+    return {value: jsonPayload}
 }

@@ -1,5 +1,5 @@
-module.exports = function buildPostUserMethod(makeRequestPayload, addUser) {
-    return async function postUserMethod(req, res) {
+module.exports = function buildPutUserdMethod(makeRequestPayload, editUser) {
+    return async function putUserMethod(req, res) {
 
         const userInfoResult = await makeRequestPayload(req)
         if (userInfoResult.isError) {
@@ -11,19 +11,19 @@ module.exports = function buildPostUserMethod(makeRequestPayload, addUser) {
         }
         const userInfo = userInfoResult.value
 
-        const addUserResult = await addUser.getAllUsers(userInfo)
-        if (addUserResult.isError) {
+        const userEditResult = await editUser(userInfo)
+        if (userEditResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
-            res.write(addUserResult)
+            res.write(JSON.stringify(userEditResult))
             res.end()
             return
         }
-        const addedUser = addUserResult.value
+        const editedUser = userEditResult.value
 
-        res.statusCode = 201
+        res.statusCode = 200
         res.setHeader('Content-Type', 'application/json')
-        res.write(addedUser)
+        res.write(JSON.stringify(editedUser))
         res.end()
     }
 }
