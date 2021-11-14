@@ -1,5 +1,7 @@
 module.exports = function buildSelectController(controllers) {
-    return function selectController(pathSegments) {
+    return function selectController(req) {
+        const {pathSegments} = req
+
         let selectedController = controllers
         for (let i = 0; i < pathSegments.length; i++) {
             const segment = pathSegments[i]
@@ -16,6 +18,7 @@ module.exports = function buildSelectController(controllers) {
                 break
             }
         }
+        
         return selectedController
     }
 }

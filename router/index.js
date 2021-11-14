@@ -7,8 +7,7 @@ module.exports = function buildRouter(controllers) {
     const selectMethod = buildSelectMethod(selectController)
 
     return function router(req, res) {
-        const {pathSegments, methodName} = req
-        const selectedMethod = selectMethod(pathSegments, methodName)
+        const selectedMethod = selectMethod(req)
         if (!selectedMethod) {
             res.statusCode = 404
             res.end()
