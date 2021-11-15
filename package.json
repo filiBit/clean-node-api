@@ -13,7 +13,7 @@
     "url": "git+https://github.com/filiBit/clean-node-api.git"
   },
   "private": true,
-  "author": "Filip Biterski",
+  "author": "Filip Biterski <filip.biterski@gmail.com",
   "license": "Unlicense",
   "bugs": {
     "url": "https://github.com/filiBit/clean-node-api/issues"

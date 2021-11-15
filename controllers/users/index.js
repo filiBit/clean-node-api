@@ -1,4 +1,4 @@
-const buildPostUserMethod = require('./post-users-method')
+const buildPostUserMethod = require('./post-user-method')
 const buildGetUsersMethod = require('./get-users-method')
 const buildPutUserMethod = require('./put-user-method')
 const buildUsersNameController = require('./name')

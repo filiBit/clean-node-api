@@ -1,5 +1,6 @@
 const path = require('path')
-const fs = require('fs/promises')
+const fs = require('fs')
+const fsPromises = require('fs/promises')
 
 const buildMakeDirIfMissing = require('./helpers/make-dir-if-missing.js')
 const buildMakeDataResult = require('./helpers/data-result.js')
@@ -19,18 +20,18 @@ module.exports = function buildDataAccess() {
 
     const userDataAccess = buildUserDataAccess({
         path,
-        fs,
+        fs: fsPromises,
         makeDirIfMissing,
         makeDataResult,
-        dataDirPath
+        parentDirPath: dataDirPath
     })
 
     const postDataAccess = buildPostDataAccess({
         path,
-        fs,
+        fs: fsPromises,
         makeDirIfMissing,
         makeDataResult,
-        dataDirPath
+        parentDirPath: dataDirPath
     })
 
     const sessionDataAccess = buildSessionDataAccess()

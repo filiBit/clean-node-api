@@ -12,6 +12,12 @@ module.exports = function buildGetPostByIdMethod(findPostById) {
         }
         const post = postResult.value
 
+        if (post == null) {
+            res.statusCode = 404
+            res.end()
+            return
+        }
+
         res.statusCode = 200
         res.setHeader('Content-Type', 'application/json')
         res.write(JSON.stringify(post))

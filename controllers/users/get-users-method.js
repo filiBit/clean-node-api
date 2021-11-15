@@ -9,7 +9,7 @@ module.exports = function buildGetMethod(findAllUsers) {
         }
 
         res.statusCode = 200
-        res.headers.push('Content-Type', 'application/json')
+        res.setHeader('Content-Type', 'application/json')
         res.write(JSON.stringify(allUsersResult.value))
         res.end()
     }

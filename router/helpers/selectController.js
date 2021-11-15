@@ -5,6 +5,12 @@ module.exports = function buildSelectController(controllers) {
         let selectedController = controllers
         for (let i = 0; i < pathSegments.length; i++) {
             const segment = pathSegments[i]
+
+            if (segment == 'favicon.ico') {
+                selectedController = controllers
+                break
+            }
+
             if (selectedController.controllers) {
                 if (selectedController.subParameter) {
                     req.pathParameters[selectedController.subParameter] = segment
@@ -18,7 +24,7 @@ module.exports = function buildSelectController(controllers) {
                 break
             }
         }
-        
+
         return selectedController
     }
 }
