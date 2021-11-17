@@ -15,7 +15,7 @@ Inspired by **Clean code** paradigm and **SOLID principles**.
 2. After the app is built and started, you should see a message about the server state
 
 ## Known Issues:
-- In some environments, methods in Node's FileSystem module have case insensitive path arguments. That can cause data operations to be performed on invalid resources.
+- **Case insensitive data operations:** In some environments, methods in Node's File System (`fs`) module have case insensitive path arguments, which can make data operations perform on untargeted resources.
 
 ## Any questions?
 filip.biterski@gmail.com
