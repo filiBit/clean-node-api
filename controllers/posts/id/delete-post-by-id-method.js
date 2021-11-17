@@ -11,6 +11,12 @@ module.exports = function buildDeletePostByIdMethod(removePostById) {
             return
         }
 
+        if (removePostResult.value === null) {
+            res.statusCode = 404
+            res.end()
+            return
+        }
+
         res.statusCode = 200
         res.end()
     }

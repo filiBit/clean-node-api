@@ -5,7 +5,7 @@ module.exports = function buildRootRequestHandler(router, makeRequestObject, mak
         try {
             console.log(`${requestObject.methodName.toUpperCase()} ${requestObject.url}`)
             router(requestObject, responseObject)
-        } catch (exception) {
+        } catch(exception) {
             console.error(exception)
             responseObject.flushHeaders()
             responseObject.statusCode = 500

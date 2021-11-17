@@ -4,7 +4,7 @@ module.exports = function buildPostAuthenticationInfoMethod({makeRequestPayload,
         if (authenticationInfoResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
-            res.write(authenticationInfoResult)
+            res.write(JSON.parse(authenticationInfoResult))
             res.end()
             return
         }
@@ -14,7 +14,7 @@ module.exports = function buildPostAuthenticationInfoMethod({makeRequestPayload,
         if (addSessionResult.isError) {
             res.statusCode = 403
             res.setHeader('Content-Type', 'application/json')
-            res.write(addSessionResult)
+            res.write(JSON.parse(addSessionResult))
             res.end()
             return
         }

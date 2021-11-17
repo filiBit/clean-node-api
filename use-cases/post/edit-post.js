@@ -1,6 +1,6 @@
 module.exports = function buildEditPost({queryPostById, makePost, modifyPost}) {
-    return async function editPost(editedPostInfo) {
-        const existingPostResult = await queryPostById(editedPostInfo.id)
+    return async function editPost(postId, editedPostInfo) {
+        const existingPostResult = await queryPostById(postId)
         if (existingPostResult.isError) return existingPostResult
         const existingPost = existingPostResult.value
 

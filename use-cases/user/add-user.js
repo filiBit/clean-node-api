@@ -3,7 +3,7 @@ module.exports = function buildAddUser({makeUser, queryUserByName, insertUser}) 
         const userResult = makeUser(userInfo)
         if (userResult.isError) return userResult
 
-        const user =userResult.value
+        const user = userResult.value
 
         const findUserResult = await queryUserByName(user.name)
         if (findUserResult.value) {

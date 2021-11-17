@@ -1,5 +1,5 @@
-module.exports = function buildQueryListOfPostsByIds(queryPostById) {
-    return async function queryListOfPostsByIds(ids) {
+module.exports = function buildQueryPostsByIdList(queryPostById) {
+    return async function queryPostsByIdList(ids) {
         const postList = []
 
         for (let i = 0; i < ids.length - 1; i++) {

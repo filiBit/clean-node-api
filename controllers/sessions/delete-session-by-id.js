@@ -5,7 +5,13 @@ module.exports = function buildDeleteSessionById(removeSession) {
         if (removeSessionResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
-            res.write(removeSessionResult)
+            res.write(JSON.parse(removeSessionResult))
+            res.end()
+            return
+        }
+
+        if (removeSessionResult.value === null) {
+            res.statusCode = 404
             res.end()
             return
         }

@@ -1,6 +1,6 @@
 module.exports = function buildQueryAllUserNames({path, fs, dirPath, makeDataResult}) {
     return async function queryAllUserNames() {
-        const promiseOperation = fs
+        const allUsersResult = await fs
             .readdir(dirPath)
             .then(fileList => {
                 const names = fileList
@@ -9,7 +9,8 @@ module.exports = function buildQueryAllUserNames({path, fs, dirPath, makeDataRes
                 return [null, names]
             })
             .catch(error => [error, null])
+            .then(result => makeDataResult(result))
 
-        return await makeDataResult(promiseOperation)
+        return allUsersResult
     }
 }

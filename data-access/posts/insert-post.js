@@ -3,11 +3,14 @@ module.exports = function buildInsertPost({fs, path, dirPath, makeDataResult}) {
         const fileName = post.id + '.json'
         const filePath = path.join(dirPath, fileName)
 
-        const promiseOperation = fs
-            .writeFile(filePath, post, {flag: 'wx'})
+        const postString = JSON.stringify(post)
+
+        const insertResult = fs
+            .writeFile(filePath, postString, {flag: 'wx', encoding: 'utf8'})
             .then(() => [null, post])
             .catch(error => [error, null])
+            .then(result => makeDataResult(result))
 
-        return await makeDataResult(promiseOperation)
+        return insertResult
     }
 }

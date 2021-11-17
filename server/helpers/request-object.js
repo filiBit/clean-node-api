@@ -4,11 +4,10 @@ module.exports = function makeCustomRequestObject (nodeRequest) {
     const parsedUrl = new URL(url, `http://${host}`)
     const { pathname } = parsedUrl
 
-    return {
-        ...nodeRequest,
-        parsedUrl: parsedUrl,
-        pathSegments: pathname.split('/').filter(s => s !== ''),
-        methodName: nodeRequest.method.toLowerCase(),
-        pathParameters: {}
-    }
+    nodeRequest.parsedUrl = parsedUrl
+    nodeRequest.pathSegments = pathname.split('/').filter(s => s !== '')
+    nodeRequest.methodName = nodeRequest.method.toLowerCase()
+    nodeRequest.pathParameters = {}
+
+    return nodeRequest
 }

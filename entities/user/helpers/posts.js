@@ -1,4 +1,6 @@
 module.exports = function makePosts(postsInfo) {
+    postsInfo = postsInfo || []
+
     if (Array.isArray(postsInfo) == false) {
         return {
             isError: true,

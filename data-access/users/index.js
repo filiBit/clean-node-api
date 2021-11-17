@@ -3,7 +3,7 @@ const buildQueryAllUsers = require('./query-all-users')
 const buildQueryAllUserNames = require('./query-all-user-names')
 const buildQueryUserByName = require('./query-user-by-name')
 const buildModifyUser = require('./modify-user')
-const buildDeleteUserById = require('./delete-user-by-id')
+const buildDeleteUserByName = require('./delete-user-by-name')
 
 module.exports = function buildUserDataAccess({
     path,
@@ -19,7 +19,7 @@ module.exports = function buildUserDataAccess({
     const queryAllUserNames = buildQueryAllUserNames({path, fs, dirPath, makeDataResult})
     const queryAllUsers = buildQueryAllUsers(queryAllUserNames, queryUserByName)
     const modifyUser = buildModifyUser({fs, path, dirPath, makeDataResult})
-    const deleteUserById = buildDeleteUserById({fs, path, dirPath, makeDataResult})
+    const deleteUserByName = buildDeleteUserByName({fs, path, dirPath, makeDataResult})
 
     return {
         insertUser,
@@ -27,6 +27,6 @@ module.exports = function buildUserDataAccess({
         queryAllUserNames,
         queryUserByName,
         modifyUser,
-        deleteUserById
+        deleteUserByName
     }
 }

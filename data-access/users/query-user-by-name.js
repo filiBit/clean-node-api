@@ -3,11 +3,18 @@ module.exports = function buildQueryUserByName({path, fs, dirPath, makeDataResul
         const fileName = name + '.json'
         const filePath = path.join(dirPath, fileName)
 
-        const promiseOperation = fs
-            .readFile(filePath)
-            .then(user => [null, user])
+        const userResult = await fs
+            .readFile(filePath, 'utf8')
+            .then(user => {
+                try {
+                    return [null, JSON.parse(user)]
+                } catch(exception) {
+                    return [exception, null]
+                }
+            })
             .catch(error => [error.code == 'ENOENT' ? null : error, null])
+            .then(result => makeDataResult(result))
 
-        return await makeDataResult(promiseOperation)
+        return userResult
     }
 }

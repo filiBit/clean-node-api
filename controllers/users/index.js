@@ -1,6 +1,5 @@
 const buildPostUserMethod = require('./post-user-method')
 const buildGetUsersMethod = require('./get-users-method')
-const buildPutUserMethod = require('./put-user-method')
 const buildUsersNameController = require('./name')
 
 module.exports = function buildUsersController({userUseCases, postUseCases, makeRequestPayload}) {
@@ -9,15 +8,19 @@ module.exports = function buildUsersController({userUseCases, postUseCases, make
 
     const postUserMethod = buildPostUserMethod(makeRequestPayload, addUser)
     const getUsersMethod = buildGetUsersMethod(findAllUsers)
-    const putUserMethod = buildPutUserMethod(makeRequestPayload, editUser)
 
-    const usersNameController = buildUsersNameController({findUserByName, removeUserByName, findAllPostsByUser})
+    const usersNameController = buildUsersNameController({
+        makeRequestPayload,
+        findUserByName,
+        editUser,
+        removeUserByName,
+        findAllPostsByUser
+    })
 
     return {
         methods: {
             postMethod: postUserMethod,
-            getMethod: getUsersMethod,
-            putMethod: putUserMethod
+            getMethod: getUsersMethod
         },
         subParameter: 'name',
         controllers: {

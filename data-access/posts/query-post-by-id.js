@@ -3,11 +3,18 @@ module.exports = function buildQueryPostById({fs, path, dirPath, makeDataResult}
         const fileName = post + '.json'
         const filePath = path.join(dirPath, fileName)
 
-        const promiseOperation = fs
-            .readFile(filePath)
-            .then(post => [null, post])
+        const postResult = fs
+            .readFile(filePath, 'utf8')
+            .then(post => {
+                try {
+                    return [null, JSON.parse(post)]
+                } catch(exception) {
+                    return [exception, null]
+                }
+            })
             .catch(error => [error.code == 'ENOENT' ? null : error, null])
+            .then(result => makeDataResult(result))
 
-        return await makeDataResult(promiseOperation)
+        return postResult
     }
 }

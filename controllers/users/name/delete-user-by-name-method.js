@@ -11,7 +11,13 @@ module.exports = function buildDeleteUserByNameMethod (removeUserByName) {
             return
         }
 
-        res.statusCode = 200
+        if (userRemoveResult.value === null) {
+            res.statusCode = 404
+            res.end()
+            return
+        }
+
+        res.statusCode = 204
         res.end()
     }
 }

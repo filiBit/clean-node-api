@@ -30,6 +30,9 @@ module.exports = function buildGetAllPostsByUserNameMethod(findUserByName, findA
 
         const allPostsByUser = allPostsByUserResult.value
 
-        return allPostsByUser
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
+        res.write(JSON.stringify(allPostsByUser))
+        res.end()
     }
 }

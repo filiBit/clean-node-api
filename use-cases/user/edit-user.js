@@ -1,8 +1,7 @@
 module.exports = function buildEditUser({queryUserByName, makeUser, modifyUser}) {
-    return async function editUser(editedUserInfo) {
-        const existingUserResult = queryUserByName(editedUserInfo.name)
-        if (existingUserResult.result.isError) return existingUserResult
-
+    return async function editUser(name, editedUserInfo) {
+        const existingUserResult = await queryUserByName(name)
+        if (existingUserResult.isError) return existingUserResult
         const existingUser = existingUserResult.value
 
         if (existingUser == null) {
@@ -12,11 +11,23 @@ module.exports = function buildEditUser({queryUserByName, makeUser, modifyUser})
             }
         }
 
-        const mergedUserInfo = {...existingUser, ...editedUserInfo}
+        const newUserResult = makeUser({...existingUser, name: editedUserInfo.name})
+        if (newUserResult.isError) return newUserResult
+        const newUser = newUserResult.value
 
-        const editedUserResult = makeUser(mergedUserInfo)
-        if (editedUserResult.isError) return editedUserResult
+        const existingUserWithNewNameResult = await queryUserByName(newUser.name)
+        if (existingUserWithNewNameResult.isError) return existingUserWithNewNameResult
+        const existingUserWithNewName = existingUserWithNewNameResult.value
 
-        return await modifyUser(editedUserResult)
+        if (existingUserWithNewName != null) {
+            return {
+                isError: true,
+                reason: 'User name is already taken.'
+            }
+        }
+
+        console.log(newUser)
+
+        return await modifyUser(name, newUser)
     }
 }

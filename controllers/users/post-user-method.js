@@ -5,17 +5,17 @@ module.exports = function buildPostUserMethod(makeRequestPayload, addUser) {
         if (userInfoResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
-            res.write(userInfoResult)
+            res.write(JSON.stringify(userInfoResult))
             res.end()
             return
         }
         const userInfo = userInfoResult.value
 
-        const addUserResult = await addUser.getAllUsers(userInfo)
+        const addUserResult = await addUser(userInfo)
         if (addUserResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
-            res.write(addUserResult)
+            res.write(JSON.stringify(addUserResult))
             res.end()
             return
         }
@@ -23,7 +23,7 @@ module.exports = function buildPostUserMethod(makeRequestPayload, addUser) {
 
         res.statusCode = 201
         res.setHeader('Content-Type', 'application/json')
-        res.write(addedUser)
+        res.write(JSON.stringify(addedUser))
         res.end()
     }
 }

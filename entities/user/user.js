@@ -19,10 +19,10 @@ module.exports = function buildMakeUser({
         const lastModifiedOnResult = makeLastModifiedOn(userInfo.createdOn)
         if (lastModifiedOnResult.isError) return lastModifiedOnResult
 
-        const passwordResult = makePassword(userInfo.password)
+        const passwordResult = userInfo.passwordHash ? {} : makePassword(userInfo.password)
         if (passwordResult.isError) return passwordResult
 
-        const passwordHashResult = makePasswordHash(passwordResult.value)
+        const passwordHashResult = userInfo.passwordHash ? {value: userInfo.passwordHash} : makePasswordHash(passwordResult.value)
         if (passwordHashResult.isError) return passwordHashResult
 
         return {
@@ -31,7 +31,7 @@ module.exports = function buildMakeUser({
                 posts: postsResult.value,
                 passwordHash: passwordHashResult.value,
                 createdOn: createdOnResult.value,
-                lastModifiedOn: lastModifiedOnResult.Value
+                lastModifiedOn: lastModifiedOnResult.value
             }
         }
     }
