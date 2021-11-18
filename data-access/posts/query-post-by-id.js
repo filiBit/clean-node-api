@@ -1,15 +1,15 @@
 module.exports = function buildQueryPostById({fs, path, dirPath, makeDataResult}) {
-    return async function queryPostById(post) {
-        const fileName = post + '.json'
+    return async function queryPostById(id) {
+        const fileName = id + '.json'
         const filePath = path.join(dirPath, fileName)
 
-        const postResult = fs
+        const postResult = await fs
             .readFile(filePath, 'utf8')
             .then(post => {
                 try {
                     return [null, JSON.parse(post)]
                 } catch(exception) {
-                    return [exception, null]
+                    return [{}, null]
                 }
             })
             .catch(error => [error.code == 'ENOENT' ? null : error, null])

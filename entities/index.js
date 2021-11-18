@@ -10,7 +10,7 @@ module.exports = function buildEntities() {
     const SECONDS_IN_24_HOURS = 24 * 60 * 60
 
     const userEntityTools = buildUserEntityTools(crypto)
-    const postEntityTools = buildPostEntityTools()
+    const postEntityTools = buildPostEntityTools(crypto)
     const sessionEntityTools = buildSessionEntityTools(crypto, SECONDS_IN_24_HOURS)
 
     return {userEntityTools, postEntityTools, sessionEntityTools}

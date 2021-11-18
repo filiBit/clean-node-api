@@ -11,7 +11,7 @@ module.exports = function buildPostIdController(makeRequestPayload, postUseCases
     return {
         methods: {
             getMethod: getPostByIdMethod,
-            patchMethot: patchPostMethod ,
+            patchMethod: patchPostMethod,
             deleteMethod: deletePostByIdMethod
         }
     }

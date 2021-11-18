@@ -2,7 +2,7 @@ module.exports = function buildDeletePostByIdMethod(removePostById) {
     return async function deletePostByIdMethod(req, res) {
         const {id} = req.pathParameters
 
-        const removePostResult = removePostById(id)
+        const removePostResult = await removePostById(id)
         if (removePostResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
@@ -11,13 +11,13 @@ module.exports = function buildDeletePostByIdMethod(removePostById) {
             return
         }
 
-        if (removePostResult.value === null) {
+        if (removePostResult.value == null) {
             res.statusCode = 404
             res.end()
             return
         }
 
-        res.statusCode = 200
+        res.statusCode = 204
         res.end()
     }
 }

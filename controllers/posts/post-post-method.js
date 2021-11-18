@@ -4,7 +4,7 @@ module.exports = function buildPostPostMethod(makeRequestPayload, addPost) {
         if (postInfoResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
-            res.write(JSON.parse(postInfoResult))
+            res.write(JSON.stringify(postInfoResult))
             res.end()
             return
         }
@@ -14,7 +14,7 @@ module.exports = function buildPostPostMethod(makeRequestPayload, addPost) {
         if (addPostResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
-            res.write(JSON.parse(addPostResult))
+            res.write(JSON.stringify(addPostResult))
             res.end()
             return
         }

@@ -11,13 +11,14 @@ module.exports = function buildModifyUser({
         const newFileName = user.name + '.json'
         const newFilePath = path.join(dirPath, newFileName)
 
-        const renameResult = await fs
-            .rename(oldFilePath, newFilePath)
-            .then(() => [null, null])
-            .catch(error => [error, null])
-            .then(result => makeDataResult(result))
-
-        if (renameResult.isError) return renameResult
+        if (oldName !== user.name) {
+            const renameResult = await fs
+                .rename(oldFilePath, newFilePath)
+                .then(() => [null, null])
+                .catch(error => [error.code == 'ENOENT' ? null : error, null])
+                .then(result => makeDataResult(result))
+            if (renameResult.isError) return renameResult
+        }
 
         const userString = JSON.stringify(user)
 

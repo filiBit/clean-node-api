@@ -5,7 +5,7 @@ module.exports = function buildInsertPost({fs, path, dirPath, makeDataResult}) {
 
         const postString = JSON.stringify(post)
 
-        const insertResult = fs
+        const insertResult = await fs
             .writeFile(filePath, postString, {flag: 'wx', encoding: 'utf8'})
             .then(() => [null, post])
             .catch(error => [error, null])

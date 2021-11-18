@@ -23,13 +23,14 @@ module.exports = function buildAddPost({
             }
         }
 
-
         const postInsertResult = await insertPost(post)
+        console.log(postInsertResult)
         if (postInsertResult.isError) return postInsertResult
 
-        user.posts.push(post.id)
+        user.postsIds.push(post.id)
 
-        const modifyUserResult = await modifyUser(user)
+        const modifyUserResult = await modifyUser(user.name, user)
+        console.log(modifyUserResult)
         if (modifyUserResult.isError) {
             await deletePostById(post.id)
             return modifyUserResult

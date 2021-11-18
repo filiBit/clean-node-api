@@ -3,7 +3,6 @@ module.exports = function buildPatchPostMethod(makeRequestPayload, editPost) {
         const {id} = req.pathParameters
 
         const postInfoResult = await makeRequestPayload(req)
-
         if (postInfoResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')

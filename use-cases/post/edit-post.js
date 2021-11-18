@@ -13,7 +13,8 @@ module.exports = function buildEditPost({queryPostById, makePost, modifyPost}) {
 
         const mergedPostInfo = {...existingPost, textContent: editedPostInfo.textContent}
 
-        const editedPost = makePost(mergedPostInfo)
+        const editedPostResult = makePost(mergedPostInfo)
+        const editedPost = editedPostResult.value
 
         return await modifyPost(editedPost)
     }

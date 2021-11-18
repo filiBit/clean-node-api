@@ -20,5 +20,5 @@ module.exports = function makeTextContent(textContentInfo) {
         }
     }
 
-    return textContentInfo
+    return {value: textContentInfo}
 }
