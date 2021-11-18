@@ -1,10 +1,10 @@
-module.exports = function makePosts(postsInfo) {
+module.exports = function makePostsIds(postsInfo) {
     postsInfo = postsInfo || []
 
     if (Array.isArray(postsInfo) == false) {
         return {
             isError: true,
-            reason: 'Posts must be of array type.'
+            reason: 'postsIds must be of array type.'
         }
     }
 
@@ -14,14 +14,14 @@ module.exports = function makePosts(postsInfo) {
             if (typeof selectedPost != 'string') {
                 return {
                     isError: true,
-                    reason: 'All elements of posts array must be of string type.'
+                    reason: 'All elements of postsIds array must be of string type.'
                 }
             }
 
             if (selectedPost == '') {
                 return {
                     isError: true,
-                    reason: 'Posts array contains an empty string.'
+                    reason: 'postsIds array contains an empty string.'
                 }
             }
         }

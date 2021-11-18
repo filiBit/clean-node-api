@@ -4,14 +4,14 @@ module.exports = function buildMakeUser({
     makePasswordHash,
     makeCreatedOn,
     makeLastModifiedOn,
-    makePosts
+    makePostsIds
 }) {
     return function makeUser(userInfo) {
         const nameResult = makeName(userInfo.name)
         if (nameResult.isError) return nameResult
 
-        const postsResult = makePosts(userInfo.posts)
-        if (postsResult.isError) return postsResult
+        const postsIdsResult = makePostsIds(userInfo.posts)
+        if (postsIdsResult.isError) return postsIdsResult
 
         const createdOnResult = makeCreatedOn(userInfo.createdOn)
         if (createdOnResult.isError) return createdOnResult
@@ -28,7 +28,7 @@ module.exports = function buildMakeUser({
         return {
             value: {
                 name: nameResult.value,
-                posts: postsResult.value,
+                postsIds: postsIdsResult.value,
                 passwordHash: passwordHashResult.value,
                 createdOn: createdOnResult.value,
                 lastModifiedOn: lastModifiedOnResult.value

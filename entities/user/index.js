@@ -3,7 +3,7 @@ const makePassword = require('./helpers/password')
 const buildMakePasswordHash = require('./helpers/password-hash')
 const makeCreatedOn = require('./helpers/created-on')
 const makeLastModifiedOn = require('./helpers/last-modified-on')
-const makePosts = require('./helpers/posts')
+const makePostsIds = require('./helpers/posts-ids')
 const buildMakeUser = require('./user.js')
 
 module.exports = function buildUserEntityTools(crypto) {
@@ -15,7 +15,7 @@ module.exports = function buildUserEntityTools(crypto) {
         makePasswordHash,
         makeCreatedOn,
         makeLastModifiedOn,
-        makePosts
+        makePostsIds
     })
 
     return {
@@ -25,7 +25,7 @@ module.exports = function buildUserEntityTools(crypto) {
             makePasswordHash,
             makeCreatedOn,
             makeLastModifiedOn,
-            makePosts
+            makePostsIds
         }
     }
 }
