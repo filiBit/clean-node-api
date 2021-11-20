@@ -5,24 +5,32 @@ module.exports = function buildAddSession({
     insertSession
 }) {
     return async function addSession(userInfo) {
-        const userResult = await queryUserByName(userInfo.name)
-        if (userResult.isError) {
+        if (userInfo == null || userInfo.name == '') {
             return {
                 isError: true,
-                reason: 'Invalid user\'s name or password.'
+                reason: 'Invalid user\'s name.'
             }
         }
+
+        const userResult = await queryUserByName(userInfo.name)
+        if (userResult.isError || userResult.value == null) {
+            return {
+                isError: true,
+                reason: 'Invalid user\'s name.'
+            }
+        }
+        const user = userResult.value
 
         const inputPasswordHashResult = makePasswordHash(userInfo.password)
         if (inputPasswordHashResult.isError) {
             return {
                 isError: true,
-                reason: 'Invalid user\'s name or password.'
+                reason: 'Invalid user\'s password.'
             }
         }
-
-        const {name: userName, passwordHash} = userResult.value
         const inputPasswordHash = inputPasswordHashResult.value
+
+        const {name, passwordHash} = user
 
         if (passwordHash !== inputPasswordHash) {
             return {
@@ -31,12 +39,12 @@ module.exports = function buildAddSession({
             }
         }
 
-        const session = makeSession(userName)
+        const sessionResult = makeSession(name)
+        const session = sessionResult.value
         await insertSession(session)
-        const sessionId = session.id
 
         return {
-            value: sessionId
+            value: session
         }
 
     }

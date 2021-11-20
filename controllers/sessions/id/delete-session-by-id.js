@@ -1,7 +1,7 @@
 module.exports = function buildDeleteSessionById(removeSession) {
-    return function deleteSessionById(req, res) {
+    return async function deleteSessionById(req, res) {
         const {id} = req.pathParameters
-        const removeSessionResult = removeSession(id)
+        const removeSessionResult = await removeSession(id)
         if (removeSessionResult.isError) {
             res.statusCode = 400
             res.setHeader('Content-Type', 'application/json')
@@ -10,13 +10,15 @@ module.exports = function buildDeleteSessionById(removeSession) {
             return
         }
 
+        console.log(removeSessionResult)
+
         if (removeSessionResult.value === null) {
             res.statusCode = 404
             res.end()
             return
         }
 
-        res.statusCode = 200
+        res.statusCode = 204
         res.end()
     }
 }
