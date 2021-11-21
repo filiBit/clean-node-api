@@ -7,8 +7,8 @@ module.exports = function buildControllers(useCases) {
     console.log('Building Controllers...')
     const {userUseCases, postUseCases, sessionUseCases} = useCases
 
-    const usersController = buildUsersController({userUseCases, postUseCases, makeRequestPayload})
-    const postsController = buildPostsController(makeRequestPayload, postUseCases)
+    const usersController = buildUsersController({userUseCases, postUseCases, sessionUseCases, makeRequestPayload})
+    const postsController = buildPostsController({makeRequestPayload, sessionUseCases, postUseCases})
     const sessionsController = buildSessionsController(makeRequestPayload, sessionUseCases)
     return {
         methods: {

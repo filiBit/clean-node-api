@@ -1,4 +1,4 @@
-module.exports = function buildPostAuthenticationInfoMethod(makeRequestPayload, addSession) {
+module.exports = function buildPostAuthenticationInfoMethod(makeRequestPayload, login) {
     return async function postAuthenticationInfoMethod(req, res) {
         const authenticationInfoResult = await makeRequestPayload(req)
         if (authenticationInfoResult.isError) {
@@ -10,8 +10,8 @@ module.exports = function buildPostAuthenticationInfoMethod(makeRequestPayload, 
         }
         const authenticationInfo = authenticationInfoResult.value
 
-        const addSessionResult = await addSession(authenticationInfo)
-        if (addSessionResult.isError) {
+        const loginResult = await login(authenticationInfo)
+        if (loginResult.isError) {
             res.statusCode = 401
             res.setHeader('Content-Type', 'application/json')
             res.write(JSON.stringify({isError: true, reason: 'Invalid authentication info.'}))
@@ -19,7 +19,7 @@ module.exports = function buildPostAuthenticationInfoMethod(makeRequestPayload, 
             return
         }
 
-        const session = addSessionResult.value
+        const session = loginResult.value
         const sessionId = session.id
 
         res.statusCode = 200

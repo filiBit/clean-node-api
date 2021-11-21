@@ -1,10 +1,10 @@
-module.exports = function buildAddSession({
+module.exports = function buildLogin({
     queryUserByName,
     makePasswordHash,
     makeSession,
     insertSession
 }) {
-    return async function addSession(userInfo) {
+    return async function login(userInfo) {
         if (userInfo == null || userInfo.name == '') {
             return {
                 isError: true,

@@ -6,12 +6,12 @@ module.exports = function buildRootRequestHandler(router, makeRequestObject, mak
             console.log(`${requestObject.methodName.toUpperCase()} ${requestObject.url}`)
             router(requestObject, responseObject)
         } catch(exception) {
-            console.warning('Root Request Handler caught an error:')
+            console.warn('Root Request Handler caught an excepetion:')
             console.error(exception)
             responseObject.flushHeaders()
             responseObject.statusCode = 500
             responseObject.end()
-            console.warning('Root Request Handler sent status code 500.')
+            console.warn('Root Request Handler sent status code 500.')
         }
     }
 }

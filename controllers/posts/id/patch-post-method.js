@@ -1,4 +1,4 @@
-module.exports = function buildPatchPostMethod(makeRequestPayload, editPost) {
+module.exports = function buildPatchPostMethod({makeRequestPayload, findPostById, authorize, editPost}) {
     return async function patchPostMethod(req, res) {
         const {id} = req.pathParameters
 
@@ -11,6 +11,24 @@ module.exports = function buildPatchPostMethod(makeRequestPayload, editPost) {
             return
         }
         const postInfo = postInfoResult.value
+
+        const existingPostResult = await findPostById(id)
+        if (existingPostResult.isError) {
+            res.statusCode = 400
+            res.setHeader('Content-Type', 'application/json')
+            res.write(JSON.stringify(existingPostResult))
+            res.end()
+            return
+        }
+        const existingPost = existingPostResult.value
+
+        const sessionId = req.headers.authorization
+        const authorizeResult = await authorize(sessionId, (session) => session.userName == existingPost.authorName)
+        if (authorizeResult.isError) {
+            res.statusCode = 403
+            res.end()
+            return
+        }
 
         const postEditResult = await editPost(id, postInfo)
         if (postEditResult.isError) {

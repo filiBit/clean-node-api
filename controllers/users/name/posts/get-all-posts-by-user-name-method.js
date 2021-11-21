@@ -1,4 +1,4 @@
-module.exports = function buildGetAllPostsByUserNameMethod(findUserByName, findAllPostsByUser) {
+module.exports = function buildGetAllPostsByUserNameMethod({findUserByName, findAllPostsByUser}) {
     return async function getAllPostsByUserNameMethod(req, res) {
         const {name} = req.pathParameters
 

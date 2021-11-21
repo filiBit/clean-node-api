@@ -2,11 +2,11 @@ const buildPostAuthenticationInfoMethod = require('./post-authentication-info-me
 const buildSessionIdController = require('./id')
 
 module.exports = function buildSessionsController(makeRequestPayload, sessionUseCases) {
-    const {addSession, removeSession} = sessionUseCases
+    const {login, logout} = sessionUseCases
 
-    const sessionIdController = buildSessionIdController(removeSession)
+    const sessionIdController = buildSessionIdController(logout)
 
-    const postAuthenticationInfoMethod = buildPostAuthenticationInfoMethod(makeRequestPayload, addSession)
+    const postAuthenticationInfoMethod = buildPostAuthenticationInfoMethod(makeRequestPayload, login)
 
     return {
         methods: {

@@ -1,4 +1,4 @@
-module.exports = function buildPostPostMethod(makeRequestPayload, addPost) {
+module.exports = function buildPostPostMethod({makeRequestPayload, addPost, authorize}) {
     return async function postPostMethod(req, res) {
         const postInfoResult = await makeRequestPayload(req)
         if (postInfoResult.isError) {
@@ -9,6 +9,14 @@ module.exports = function buildPostPostMethod(makeRequestPayload, addPost) {
             return
         }
         const postInfo = postInfoResult.value
+
+        const sessionId = req.headers.authorization
+        const authorizeResult = await authorize(sessionId, (session) => session.userName === postInfo.authorName)
+        if (authorizeResult.isError) {
+            res.statusCode = 403
+            res.end()
+            return
+        }
 
         const addPostResult = await addPost(postInfo)
         if (addPostResult.isError) {

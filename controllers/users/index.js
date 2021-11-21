@@ -2,19 +2,21 @@ const buildPostUserMethod = require('./post-user-method')
 const buildGetUsersMethod = require('./get-users-method')
 const buildUsersNameController = require('./name')
 
-module.exports = function buildUsersController({userUseCases, postUseCases, makeRequestPayload}) {
+module.exports = function buildUsersController({userUseCases, postUseCases, sessionUseCases, makeRequestPayload}) {
     const {addUser, findAllUsers, findUserByName, editUser, removeUserByName} = userUseCases
+    const {authorize} = sessionUseCases
     const {findAllPostsByUser} = postUseCases
 
     const postUserMethod = buildPostUserMethod(makeRequestPayload, addUser)
-    const getUsersMethod = buildGetUsersMethod(findAllUsers)
+    const getUsersMethod = buildGetUsersMethod(findAllUsers, authorize)
 
     const usersNameController = buildUsersNameController({
         makeRequestPayload,
         findUserByName,
         editUser,
         removeUserByName,
-        findAllPostsByUser
+        findAllPostsByUser,
+        authorize
     })
 
     return {

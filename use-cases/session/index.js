@@ -1,6 +1,6 @@
-const buildAddSession = require('./add-session')
-const buildVerifySession = require('./verify-session')
-const buildRemoveSession = require('./remove-session')
+const buildLogin = require('./login')
+const buildAuthorize = require('./authorize')
+const buildLogout = require('./logout')
 
 module.exports = function buildSessionUseCases({
     sessionEntityTools,
@@ -13,9 +13,9 @@ module.exports = function buildSessionUseCases({
     const {helpers: {makePasswordHash}} = userEntityTools
     const {queryUserByName} = userDataAccess
 
-    const addSession = buildAddSession({queryUserByName, makePasswordHash, makeSession, insertSession})
-    const verifySession = buildVerifySession({querySessionById, isSessionExpired})
-    const removeSession = buildRemoveSession(deleteSessionById)
+    const login = buildLogin({queryUserByName, makePasswordHash, makeSession, insertSession})
+    const authorize = buildAuthorize({querySessionById, isSessionExpired})
+    const logout = buildLogout(deleteSessionById)
 
-    return {addSession, verifySession, removeSession}
+    return {login, authorize, logout}
 }

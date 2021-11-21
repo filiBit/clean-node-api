@@ -1,6 +1,14 @@
-module.exports = function buildPatchUserMethod(makeRequestPayload, editUser) {
+module.exports = function buildPatchUserMethod({makeRequestPayload, editUser, authorize}) {
     return async function patchUserMethod(req, res) {
         const {name} = req.pathParameters
+        const sessionId = req.headers.authorization
+
+        const authorizeResult = await authorize(sessionId, (session) => session.userName === name)
+        if (authorizeResult.isError) {
+            res.statusCode = 403
+            res.end()
+            return
+        }
 
         const userInfoResult = await makeRequestPayload(req)
         if (userInfoResult.isError) {

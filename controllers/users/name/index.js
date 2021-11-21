@@ -8,13 +8,14 @@ module.exports = function buildUsersNameController({
     findUserByName,
     editUser,
     removeUserByName,
-    findAllPostsByUser
+    findAllPostsByUser,
+    authorize
 }) {
     const getUserByNameMethod = buildGetUserByNameMethod(findUserByName)
-    const patchUserMethod = buildPatchUserMethod(makeRequestPayload, editUser)
-    const deleteUserByNameMethod = buildDeleteUserByNameMethod(removeUserByName)
+    const patchUserMethod = buildPatchUserMethod({makeRequestPayload, editUser, authorize})
+    const deleteUserByNameMethod = buildDeleteUserByNameMethod(removeUserByName, authorize)
 
-    const userPostsController = buildUserPostsController(findUserByName, findAllPostsByUser)
+    const userPostsController = buildUserPostsController({findUserByName, findAllPostsByUser, authorize})
 
     return {
         methods: {
